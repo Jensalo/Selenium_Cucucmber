@@ -1,0 +1,102 @@
+plugins {
+    id 'java'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Cucumber
+    testImplementation 'io.cucumber:cucumber-java:7.14.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.14.0'
+
+    // JUnit
+    testImplementation 'junit:junit:4.13.2'
+
+    // Selenium y WebDriverManager
+    implementation 'org.seleniumhq.selenium:selenium-java:4.19.1'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
+
+    // Extent Reports
+    testImplementation 'com.aventstack:extentreports:5.1.1'
+    testImplementation 'tech.grasshopper:extentreports-cucumber7-adapter:1.10.1'
+}
+
+// Configuración de tests por defecto (cuando se corre `./gradlew test`)
+test {
+    useJUnit()
+
+    // Mostrar eventos en consola
+    testLogging {
+        events "passed", "failed", "skipped"
+    }
+
+    // Reportes HTML y XML de JUnit
+    reports {
+        junitXml.required.set(true)
+        html.required.set(true)
+    }
+
+    // Filtrar por tags desde línea de comandos
+    if (project.hasProperty('cucumber.filter.tags')) {
+        systemProperty 'cucumber.filter.tags', project.getProperty('cucumber.filter.tags')
+    }
+
+    // Opcional: permite pasar opciones de cucumber desde línea de comandos
+    if (System.getProperty("cucumber.options") != null) {
+        systemProperty "cucumber.options", System.getProperty("cucumber.options")
+    }
+}
+
+// Rutas de código y recursos
+sourceSets {
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+}
+
+// Tarea para ejecutar Cucumber con reportes de Extent
+tasks.register('runCucumber', JavaExec) {
+    group = "verification"
+    description = "Ejecuta Cucumber y genera reportes"
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'io.cucumber.core.cli.Main'
+
+    args = [
+        "--plugin", "pretty",
+        "--plugin", "html:build/reports/cucumber/html-report",
+        "--plugin", "json:build/reports/cucumber/report.json",
+        "--plugin", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:build/reports/extent/",
+        "--glue", "steps",
+        "--glue", "hooks",
+        "src/resources/features"
+    ]
+
+    // Sin systemProperties: solo se usará extent.properties del classpath
+
+    doFirst {
+        println ">> Args usados para ejecutar: $args"
+    }
+
+    // Opcional: abrir el reporte automáticamente si existe
+    doLast {
+        def reportFile = file("build/reports/extent/spark.html")
+        if (reportFile.exists()) {
+            println "Abriendo reporte: ${reportFile}"
+            java.awt.Desktop.desktop.browse(reportFile.toURI())
+        } else {
+            println "No se generó el reporte Spark."
+        }
+    }
+}

@@ -1,0 +1,54 @@
+
+Para iniciar a trabajar con selenium java cucmber
+se debe intalar lo siguiente
+=> jdk java y configurar variable
+=> gradle y configurar variable
+
+en las extenciones de visual code
+	=>snippets an syntax highlight for ghenkin ccucmber
+	=> Cucumber
+	=> extension pack for java
+	
+	
+Para crear l acarpeta del proyecto
+	=>ejemplo: mkdir Curso_Selenium_2025
+	=> ir a configuracion command palette
+	=> escribir java => elegir create a gradle java project => elegir la carpeta => elegir grovy
+	
+para instalar selenium		
+	=>https://mvnrepository.com/ => selenium  java => tomo una de las ultimas versiones no la ultima => click en gradle
+	=> copiamos el path y lo pegamos en ela rchivo buil.gradle en la parte de dependencias
+	
+para instalar testng
+	=>https://mvnrepository.com/ => testng
+	=> copiamos el path y lo pegamos en ela rchivo buil.gradle en la parte de dependencias
+
+Para instalar cucumber
+	=>https://mvnrepository.com/ => cucumber JVM: java y cucmber: JVM JUnit4
+	=> copiamos el path y lo pegamos en ela rchivo buil.gradle en la parte de dependencias
+	
+Para instalar webdrivermanager
+	=>https://mvnrepository.com/ => webdrivermanager
+	=> copiamos el path y lo pegamos en ela rchivo buil.gradle en la parte de dependencias
+	
+para que tome las dependencias que acabamos de agregar
+	=>gradle build
+	
+para ejecutar
+ gradle test
+ 
+ Feature: Visitar sitio Free Range Testers
+
+  Scenario: Usuario navega al sitio principal
+    Given el usuario abre el navegador
+    When navega al sitio Free Range Testers
+    Then se cierra el navegador
+	
+	
+=> selnium con java cucumber pom webdriver
+
+=> archivo BasePage es la capa primaria donde definimos los que vamos a estar reusando, es una clase donde definimos cosas genericas
+
+para limpiar y complialr desde cero
+	gradlew clean build
+

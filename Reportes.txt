@@ -1,0 +1,28 @@
+==> REPORTES
+para generar los reportes de forma clara y mas entendible
+1. loguin en github (https://reports.cucumber.io), caso de poder ingresar a github, hacer
+2. crear un archivo 
+    cucumber.properties en src/test/resources/
+     agregale al archivo 
+      cucumber.publish.enabled=true
+       cucumber.publish.quiet=false
+   ejecuta ejemplo 
+     gradlew runCucumber -Dcucumber.filter.tags="@Academia"
+     despues d ela ejecucion en consola aparece un enlace donde se ven los reportes
+      ejemplo https://reports.cucumber.io/reports/72b4e4bb-4fa8-4d4c-9176-bb0063a9acf8 
+
+====> para tomar Screenshot despues de los errores se debe crear
+1. Crea una clase utilitaria para tomar screenshots
+📁 Ruta sugerida: src/test/java/utils/ScreenshotUtil.java
+
+2. Crea tu clase Hooks.java
+📁 Ruta sugerida: src/test/java/hooks/Hooks.java
+Esta clase se ejecutará después de cada escenario. Allí capturamos la imagen si el escenario falló.
+
+3: Configura correctamente tu glue en build.gradle
+Asegúrate que en tu task runCucumber tienes esta línea:
+  '--glue', 'steps', '--glue', 'hooks'
+
+4: Ejecuta y prueba
+Corre un escenario que sabes que fallará:
+  gradlew runCucumber

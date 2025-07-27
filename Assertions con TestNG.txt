@@ -1,0 +1,45 @@
+Tipos de Assertions con TestNG: Recurso
+Las verificaciones son una parte fundamental a la hora de automatizar. Vamos a necesitar verificar que el estado de un sistema y sus elementos es el esperado y para eso vamos a usar la librería Assert de TestNG. 
+
+
+TestNG proporciona una serie de métodos de aserción a través de la clase Assert para verificar que las condiciones de las pruebas sean cumplidas. 
+Estas aserciones son esenciales para validar el comportamiento esperado de la aplicación bajo prueba. ejemplos utilizando Selenium y Java:
+
+public void Ejemplo
+	String palabraEsperada ="Pepe";
+	String palabraEncontrada ="Papa";
+
+	Integer numeroLoco = 1;
+	Integer numeroLoco2 = 2;
+	Assetr.assertEquals(numeroLoco numeroLoco2);
+
+1. assertEquals
+Verifica que dos valores sean iguales.
+
+  Assert.assertEquals(palabraEsperada, palabraEncontrada); //"El título de la página no es el esperado."
+
+2. assertNotEquals
+Verifica que dos valores no sean iguales.
+
+   Assert.assertNotEquals(palabraEsperada, palabraEncontrada); //"El título de la página no debería ser este."
+
+3. assertTrue
+Verifica que una condición sea verdadera.
+
+  Assert.assertTrue(palabraEncontrada.contains(palabraEsperada); //"El elemento debería estar presente."
+
+4. assertFalse
+Verifica que una condición sea falsa.
+
+   Assert.assertFalsepalabraEncontrada.contains(palabraEsperada); //"El elemento no debería estar presente.")
+
+5. Soft Assertions: 
+no detiene la ejecucion al fallar, ideal para verificar muchas cosas pequeñas a la vez
+    soft.assertEquals(palabraEsperada, palabraEncontrada);
+        soft.assertTrue(palabraEncontrada.contains(palabraEsperada));
+        soft.assertNotEquals(palabraEncontrada,palabraEsperada);
+ 
+        soft.assertAll();
+ 
+
+

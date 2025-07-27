@@ -1,0 +1,77 @@
+==>> TAGS O IDENTIFICADORES
+ se nombra con (@+nombre) @Plans
+
+Opciones a la hora de correr tags
+1. gradle test -Dcucumber.filter.tags="@Cursos" 
+-> Va a correr Scenarios taggeados con @Cursos
+2. gradle test -Dcucumber.filter.tags="Not @Cursos" 
+-> Va a correr todos los Scenarios que no tengan el tag @Cursos
+3. gradle test -Dcucumber.filter.tags="@Cursos" and "@Academia"
+-> Va a correr todos los scenarios que tengan ambos, @Cursos y @Academia tags al mismo tiempo. 
+4. gradle test -Dcucumber.filter.tags="@Cursos" or "@Academia" 
+-> Va a correr los scenarios que tengan los tags @Cursos o @Academia 
+  (osea...todos los scenarios que tengan uno u otro).
+5. gradle test -Dcucumber.filter.tags="@Cursos" and not "@Academia" 
+-> Va a correr todos los scenarios que tengan el tag "@Cursos" y no tengan "@Academia".
+
+=>En los steps se puede colocar un orden gramatical, es decir para que en los features se puedan usar diferentes tiempo gramticales 
+ejemplos
+  @Given("I navigate to www.freerangetesters.com")
+    public void iNavigateToFRT() {
+        landingPage.navigateToFreeRangeTesters();
+    }
+ 
+    @When("I go to {word} using the navigation bar")
+    public void navigationBarUse(String section) {
+        landingPage.clickOnSectionNavigationBar(section);
+    }
+ 
+    @When("(I|The user|The client) (select|selects) Elegir Plan")
+    public void selectElegirPlan() {
+        landingPage.clickOnElegirPlanButton();
+    }
+ 
+    @And("(I|The user|The client) (select|selects) Introducción al Testing")
+    public void navigateToIntro() {
+        cursosPage.clickFundamentosTestingLink();
+        fundamentosPage.clickIntroduccionTestingLink();
+ 
+    }
+ 
+    @Then("(I|The user|The client) can validate the options in the checkout page")
+    public void validateCheckoutPlans() {
+        List<String> lista = registro.returnPlanDropdownValues();
+        List<String> listaEsperada = Arrays.asList("Academia: $16.99 / mes • 11 productos",
+                "Academia: $176 / año • 11 productos", "Free: Gratis • 1 producto");
+ 
+        Assert.assertEquals(listaEsperada, lista);
+    }
+ 
+}
+=>FreeRangeNavegacion: 
+
+@Navigation
+Feature: Navigation
+    To see the subpages
+    Without logging in
+    I can click the navigation bar links
+ 
+    Background: I am on the Free Range Testers web without logging in.
+        Given I navigate to www.freerangetesters.com
+ 
+    Scenario Outline: I can access the subpages through the navigation bar
+        When I go to <section> using the navigation bar
+ 
+        Examples:
+            | section    |
+            | Cursos     |
+ 
+    @Courses
+    Scenario: Courses are presented correctly to potential customers
+        When I go to Cursos using the navigation bar
+        And I select Introducción al Testing
+ 
+    @Plans @Courses
+    Scenario: Users can select a plan when signing up
+        When The client selects Elegir Plan
+        Then The user can validate the options in the checkout page

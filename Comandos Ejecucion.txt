@@ -1,0 +1,11 @@
+
+==> CUÁNDO USAR CADA COMANDO
+  comando mas usado => gradlew clean runCucumber 
+gradlew test ==> Ejecutar pruebas desde TestRunner (sin plugins personalizados)
+gradlew runCucumber	==> Ejecutar con configuración personalizada (Extent, tags, etc.)
+gradlew clean ==> Limpiar resultados anteriores
+gradlew clean test	==> Limpiar y ejecutar pruebas básicas (TestRunner)
+gradlew clean runCucumber ==> Limpieza + ejecución controlada (ideal para ExtentReports)
+gradlew test --stacktrace ==> Ver detalles de errores al ejecutar TestRunner
+gradlew runCucumber --stacktrace ==> Ver errores de ejecución con ExtentAdapter, hooks, paths
+gradlew clean build --refresh-dependencies	==> Solucionar errores por versiones corruptas o dependencias mal descargadas

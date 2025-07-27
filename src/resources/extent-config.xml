@@ -1,0 +1,9 @@
+<extentreports>
+  <configuration>
+    <theme>DARK</theme>
+    <encoding>utf-8</encoding>
+    <documentTitle>Reporte de Pruebas Automatizadas</documentTitle>
+    <reportName>Resultados de la Ejecución</reportName>
+    <timelineEnabled>true</timelineEnabled>
+  </configuration>
+</extentreports>
